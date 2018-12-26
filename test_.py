@@ -58,3 +58,4 @@ def test_tuples_are_equal():
     assert not a.is_equal(b)
     assert b.is_equal(d)
     assert not b.is_equal(c)
+
