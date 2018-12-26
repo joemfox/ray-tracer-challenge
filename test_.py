@@ -48,3 +48,13 @@ def test_vector_creation():
     assert a.w == 0.0
     assert a.is_vector()
     assert not a.is_point()
+
+def test_tuples_are_equal():
+    a = Vector(4, -4, 3)
+    b = Point(4, -4, 3)
+    c = Tuple(4, -4, 3, 0)
+    d = Tuple(4, -4, 3, 1)
+    assert a.is_equal(c)
+    assert not a.is_equal(b)
+    assert b.is_equal(d)
+    assert not b.is_equal(c)
