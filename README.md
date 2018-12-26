@@ -1,0 +1,1 @@
+This repo contains the code I write as I work through The Ray Tracer Challenge (https://pragprog.com/book/jbtracer/the-ray-tracer-challenge)
