@@ -1,3 +1,4 @@
+import pytest
 from features.Tuple import Tuple, Point, Vector
 
 EPSILON = 0.00001
@@ -90,3 +91,13 @@ def test_vector_vector_subtraction():
     d = a - b
     assert d == c
     assert d.is_vector()
+
+def test_vector_negation():
+    a = Vector(1, -2, 3)
+    b = Vector(-1, 2, -3)
+    assert -a == b
+
+def test_point_negation_exception():
+    a = Point(1, 2, 3)
+    with pytest.raises(Exception):
+        -a

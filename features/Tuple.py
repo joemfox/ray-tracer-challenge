@@ -38,6 +38,11 @@ class Tuple:
         w = self.w - t.w
         return Tuple(x, y, z, w)
 
+    def __neg__(self):
+        assert self.is_vector(), "Unary negation operator only works on vectors, not points."
+        zero = Vector(0,0,0)
+        return zero - self
+
 class Point(Tuple):
     def __init__(self, x, y, z):
         Tuple.__init__(self,x,y,z,1.0)
