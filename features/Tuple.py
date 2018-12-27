@@ -30,7 +30,13 @@ class Tuple:
         z = self.z + t.z
         w = self.w + t.w
         return Tuple(x, y, z, w)
-    
+
+    def __sub__(self, t):
+        x = self.x - t.x
+        y = self.y - t.y
+        z = self.z - t.z
+        w = self.w - t.w
+        return Tuple(x, y, z, w)
 
 class Point(Tuple):
     def __init__(self, x, y, z):

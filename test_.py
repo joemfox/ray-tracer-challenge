@@ -66,3 +66,27 @@ def test_tuple_addition():
     d = a + b
     assert d == c, "tuple addition should produce new tuple"
     assert d.is_point()
+
+def test_point_subtraction():
+    a = Point(3, 2, 1)
+    b = Point(5, 6, 7)
+    c = Vector(-2, -4, -6)
+    d = a - b
+    assert d == c
+    assert d.is_vector()
+
+def test_point_vector_subtraction():
+    a = Point(3, 2, 1)
+    b = Vector(5, 6, 7)
+    c = Point(-2, -4, -6)
+    d = a - b
+    assert d == c
+    assert d.is_point()
+
+def test_vector_vector_subtraction():
+    a = Vector(3, 2, 1)
+    b = Vector(5, 6, 7)
+    c = Vector(-2, -4, -6)
+    d = a - b
+    assert d == c
+    assert d.is_vector()
