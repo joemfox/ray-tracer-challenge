@@ -1,3 +1,4 @@
+import math
 import pytest
 from features.Tuple import Tuple, Point, Vector
 
@@ -101,3 +102,28 @@ def test_point_negation_exception():
     a = Point(1, 2, 3)
     with pytest.raises(Exception):
         -a
+
+def test_tuple_multiplication():
+    a = Tuple(1, -2, 3, -4)
+    b = Tuple(3.5, -7, 10.5, -14)
+    c = Tuple(0.5, -1, 1.5, -2)
+    assert a * 3.5 == b
+    assert a * 0.5 == c
+
+def test_tuple_division():
+    a = Tuple(1, -2, 3, -4)
+    b = Tuple(0.5, -1, 1.5, -2)
+    assert a / 2 == b
+
+def test_vector_get_magnitude():
+    a = Vector(1, 0, 0)
+    assert a.magnitude() == 1
+    b = Vector(0, 1, 0)
+    assert b.magnitude() == 1
+    c = Vector(0, 0, 1)
+    assert c.magnitude() == 1
+    d = Vector(1, 2, 3)
+    assert d.magnitude() == math.sqrt(14)
+    e = Vector(-1, -2, -3)
+    assert e.magnitude() == math.sqrt(14)
+    

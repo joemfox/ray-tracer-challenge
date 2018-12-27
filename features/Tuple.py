@@ -1,3 +1,4 @@
+import math
 from features.util import equals
 
 class Tuple:
@@ -42,6 +43,20 @@ class Tuple:
         assert self.is_vector(), "Unary negation operator only works on vectors, not points."
         zero = Vector(0,0,0)
         return zero - self
+    
+    def __mul__(self, scalar):
+        x = self.x * scalar
+        y = self.y * scalar
+        z = self.z * scalar
+        w = self.w * scalar
+        return Tuple(x, y, z, w)
+    
+    def __truediv__(self, scalar):
+        x = self.x / scalar
+        y = self.y / scalar
+        z = self.z / scalar
+        w = self.w / scalar
+        return Tuple(x, y, z, w)
 
 class Point(Tuple):
     def __init__(self, x, y, z):
@@ -51,3 +66,10 @@ class Vector(Tuple):
     def __init__(self, x, y, z):
         Tuple.__init__(self,x,y,z,0.0)
 
+    def magnitude(self):
+        return math.sqrt(
+            self.x ** 2 +
+            self.y ** 2 +
+            self.z ** 2 +
+            self.w ** 2
+        )
