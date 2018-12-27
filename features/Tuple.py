@@ -9,10 +9,10 @@ class Tuple:
         self.coords = [self.x,self.y,self.z,self.w]
     
     def is_point(self):
-        return self.w == 1.0
+        return equals(self.w, 1.0)
 
     def is_vector(self):
-        return self.w == 0.0
+        return equals(self.w, 0.0)
 
     def __eq__(self, t):
         a = self.coords
