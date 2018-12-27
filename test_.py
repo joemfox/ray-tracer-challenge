@@ -31,7 +31,7 @@ def test_tuple_vector_assignment():
 
 def test_point_creation():
     a = Point(4, -4, 3)
-    assert isinstance(a, Tuple), "should be instance of Tuple"
+    assert isinstance(a, Tuple), "Point should be instance of Tuple"
     assert a.x == 4.0
     assert a.y == -4.0
     assert a.z == 3.0
@@ -41,7 +41,7 @@ def test_point_creation():
 
 def test_vector_creation():
     a = Vector(4, -4, 3)
-    assert isinstance(a, Tuple), "should be instance of Tuple"
+    assert isinstance(a, Tuple), "Vector should be instance of Tuple"
     assert a.x == 4.0
     assert a.y == -4.0
     assert a.z == 3.0
@@ -54,8 +54,15 @@ def test_tuples_are_equal():
     b = Point(4, -4, 3)
     c = Tuple(4, -4, 3, 0)
     d = Tuple(4, -4, 3, 1)
-    assert a.is_equal(c)
-    assert not a.is_equal(b)
-    assert b.is_equal(d)
-    assert not b.is_equal(c)
+    assert a == (c)
+    assert not a == (b)
+    assert b == (d)
+    assert not b == (c)
 
+def test_tuple_addition():
+    a = Tuple(3, -2, 5, 1)
+    b = Tuple(-2, 3, 1, 0)
+    c = Tuple(1, 1, 6, 1)
+    d = a + b
+    assert d == c, "tuple addition should produce new tuple"
+    assert d.is_point()

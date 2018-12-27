@@ -14,7 +14,7 @@ class Tuple:
     def is_vector(self):
         return self.w == 0.0
 
-    def is_equal(self, t):
+    def __eq__(self, t):
         a = self.coords
         b = t.coords
         equal_flag = True
@@ -23,6 +23,14 @@ class Tuple:
                 if not equals(a[i],b[i]):
                     equal_flag = False
         return equal_flag
+
+    def __add__(self, t):
+        x = self.x + t.x
+        y = self.y + t.y
+        z = self.z + t.z
+        w = self.w + t.w
+        return Tuple(x, y, z, w)
+    
 
 class Point(Tuple):
     def __init__(self, x, y, z):
