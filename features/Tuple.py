@@ -59,17 +59,18 @@ class Tuple:
         return Tuple(x, y, z, w)
 
 class Point(Tuple):
-    def __init__(self, x, y, z):
-        Tuple.__init__(self,x,y,z,1.0)
+    def __init__(self, x, y, z, w = 1.0):
+        Tuple.__init__(self,x,y,z,w)
 
 class Vector(Tuple):
-    def __init__(self, x, y, z):
-        Tuple.__init__(self,x,y,z,0.0)
+    def __init__(self, x, y, z, w = 0.0):
+        Tuple.__init__(self,x,y,z,w)
 
     def magnitude(self):
-        return math.sqrt(
-            self.x ** 2 +
-            self.y ** 2 +
-            self.z ** 2 +
-            self.w ** 2
-        )
+        coords = [c ** 2 for c in self.coords]
+        return math.sqrt(sum(coords))
+    
+    def normalize(self):
+        mag = self.magnitude()
+        coords = [c/mag for c in self.coords]
+        return Vector(*coords)

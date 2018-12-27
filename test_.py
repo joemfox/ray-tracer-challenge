@@ -126,4 +126,15 @@ def test_vector_get_magnitude():
     assert d.magnitude() == math.sqrt(14)
     e = Vector(-1, -2, -3)
     assert e.magnitude() == math.sqrt(14)
+
+def test_vector_normalization():
+    a = Vector(4, 0, 0)
+    a_ = a.normalize()
+    assert a_ == Vector(1, 0, 0)
+    assert a_.magnitude() == 1
+    b = Vector(1, 2, 3)
+    b_ = b.normalize()
+    assert b_ == Vector(0.26726, 0.53452, 0.80178)
+    assert b_.magnitude() == 1
+
     
