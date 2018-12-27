@@ -45,18 +45,12 @@ class Tuple:
         return zero - self
     
     def __mul__(self, scalar):
-        x = self.x * scalar
-        y = self.y * scalar
-        z = self.z * scalar
-        w = self.w * scalar
-        return Tuple(x, y, z, w)
+        coords = [c * scalar for c in self.coords]
+        return Tuple(*coords)
     
     def __truediv__(self, scalar):
-        x = self.x / scalar
-        y = self.y / scalar
-        z = self.z / scalar
-        w = self.w / scalar
-        return Tuple(x, y, z, w)
+        coords = [c / scalar for c in self.coords]
+        return Tuple(*coords)
 
 class Point(Tuple):
     def __init__(self, x, y, z, w = 1.0):
