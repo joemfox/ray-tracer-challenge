@@ -68,3 +68,16 @@ class Vector(Tuple):
         mag = self.magnitude()
         coords = [c/mag for c in self.coords]
         return Vector(*coords)
+
+    def dot(self, t):
+        x = self.x * t.x
+        y = self.y * t.y
+        z = self.z * t.z
+        w = self.w * t.w
+        return sum([x, y, z, w])
+
+    def cross(self, t):
+        x = self.y * t.z - self.z * t.y
+        y = self.z * t.x - self.x * t.z
+        z = self.x * t.y - self.y * t.x
+        return Vector(x, y, z)

@@ -137,4 +137,15 @@ def test_vector_normalization():
     assert b_ == Vector(0.26726, 0.53452, 0.80178)
     assert b_.magnitude() == 1
 
-    
+def test_vector_dot_product():
+    a = Vector(1, 2, 3)
+    b = Vector(2, 3, 4)
+    assert a.dot(b) == 20
+    assert b.dot(a) == 20
+
+def test_vector_cross_product():
+    a = Vector(1, 2, 3)
+    b = Vector(2, 3, 4)
+    assert a.cross(b) == Vector(-1, 2, -1)
+    assert b.cross(a) == Vector(1, -2, 1)
+
