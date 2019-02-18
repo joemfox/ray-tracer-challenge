@@ -1,6 +1,6 @@
 import math
 import pytest
-from features.Tuple import Tuple, Point, Vector
+from features.Tuple import Tuple, Point, Vector, Color
 
 EPSILON = 0.00001
 
@@ -149,3 +149,31 @@ def test_vector_cross_product():
     assert a.cross(b) == Vector(-1, 2, -1)
     assert b.cross(a) == Vector(1, -2, 1)
 
+def test_color_tuple():
+    c = Color(-0.5, 0.4, 1.7)
+    assert c.red == -0.5
+    assert c.green == 0.4
+    assert c.blue == 1.7
+
+def test_color_addition():
+    c1 = Color(0.9, 0.6, 0.75)
+    c2 = Color(0.7, 0.1, 0.25)
+    c3 = Color(1.6, 0.7, 1.0)
+    assert c1 + c2 == c3
+
+def test_color_subtraction():
+    c1 = Color(0.9, 0.6, 0.75)
+    c2 = Color(0.7, 0.1, 0.25)
+    c3 = Color(0.2, 0.5, 0.5)
+    assert c1 - c2 == c3
+
+def test_color_scalar_multiplication():
+    c = Color(0.2, 0.3, 0.4)
+    c2 = Color(0.4, 0.6, 0.8)
+    assert c * 2 == c2
+
+def test_color_color_multiplication():
+    c1 = Color(1, 0.2, 0.4)
+    c2 = Color(0.9, 1, 0.1)
+    c3 = Color(0.9, 0.2, 0.04)
+    assert c1 * c2 == c3

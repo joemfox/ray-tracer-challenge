@@ -13,7 +13,7 @@ class Tuple:
         return equals(self.w, 1.0)
 
     def is_vector(self):
-        return equals(self.w, 0.0)
+        return equals(self.w, 0.0) and not isinstance(self, Color)
 
     def __eq__(self, t):
         a = self.coords
@@ -44,9 +44,16 @@ class Tuple:
         zero = Vector(0,0,0)
         return zero - self
     
-    def __mul__(self, scalar):
-        coords = [c * scalar for c in self.coords]
-        return Tuple(*coords)
+    def __mul__(self, other):
+        if isinstance(other, Tuple):
+            x = self.x * other.x
+            y = self.y * other.y
+            z = self.z * other.z
+            w = self.w * other.w
+            return type(self)(x, y, z, w)
+        else:
+            coords = [c * other for c in self.coords]
+            return Tuple(*coords)
     
     def __truediv__(self, scalar):
         coords = [c / scalar for c in self.coords]
@@ -81,3 +88,20 @@ class Vector(Tuple):
         y = self.z * t.x - self.x * t.z
         z = self.x * t.y - self.y * t.x
         return Vector(x, y, z)
+
+class Color(Tuple):
+    def __init__(self, r, g, b, w = 0.0):
+        Tuple.__init__(self, r, g, b, w)
+
+    def get_red(self):
+        return self.x
+
+    def get_green(self):
+        return self.y
+
+    def get_blue(self):
+        return self.z
+
+    red = property(get_red)
+    green = property(get_green)
+    blue = property(get_blue)
