@@ -9,7 +9,8 @@ class Canvas:
         self.canvas = [[{"color":color} for x in range(width)] for y in range(height)]
 
     def write_pixel(self, x, y, color):
-        print(x,y,len(self.canvas),len(self.canvas[0]))
+        if (x >= self.width) or (y >= self.height):
+            return
         self.canvas[y][x]["color"] = color
 
     def pixel_at(self, x, y):
