@@ -3,10 +3,10 @@ from features.util import equals
 from features.Tuple import Tuple, Point, Vector, Color
 
 class Canvas:
-    def __init__(self, width, height):
+    def __init__(self, width, height, color = Color(0,0,0)):
         self.width = width
         self.height = height
-        self.canvas = [[{"color":Color(0,0,0)} for x in range(width)] for y in range(height)]
+        self.canvas = [[{"color":color} for x in range(width)] for y in range(height)]
 
     def write_pixel(self, x, y, color):
         print(x,y,len(self.canvas),len(self.canvas[0]))
@@ -21,7 +21,18 @@ class Canvas:
 
         color_data = ""
         for row in self.canvas:
-            color_data += " ".join([i["color"].to_string()for i in row]) + "\n"
+            row = " ".join([i["color"].to_string() for i in row])
+            # if(len(" ".join(row)) > 70):
+            values = iter(row.split())
+            lines, current = [], next(values)
+            for v in values:
+                if len(current) + 1 + len(v) > 70:
+                    color_data += current + "\n"
+                    current = v
+                else:
+                    current += " " + v
+            
+            color_data += current + "\n"
 
         ppm += color_data
         return ppm
