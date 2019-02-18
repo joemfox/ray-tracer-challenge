@@ -2,17 +2,20 @@ import math
 import pytest
 from features.Tuple import Tuple, Point, Vector, Color
 
+# EQUALITY FUNCTION FOR FLOATING POINT COMPARISON
 EPSILON = 0.00001
 
 def equals(a,b):
     return abs(a - b) < EPSILON
 
+# EQUALITY TEST
 def test_equality():
     a = 0.1 + 0.2
     b = 0.3
     assert equals(a,b)
     assert not b == (0.1 + 0.2)
 
+# TUPLES, VECTORS, POINTS
 def test_tuple_point_assignment():
     a = Tuple(4.3, -4.2, 3.1 ,1.0)
     assert a.x == 4.3
@@ -149,6 +152,7 @@ def test_vector_cross_product():
     assert a.cross(b) == Vector(-1, 2, -1)
     assert b.cross(a) == Vector(1, -2, 1)
 
+# COLORS
 def test_color_tuple():
     c = Color(-0.5, 0.4, 1.7)
     assert c.red == -0.5
@@ -177,3 +181,15 @@ def test_color_color_multiplication():
     c2 = Color(0.9, 1, 0.1)
     c3 = Color(0.9, 0.2, 0.04)
     assert c1 * c2 == c3
+
+
+# CANVAS
+def test_canvas_creation():
+    black = Color(0,0,0)
+    c = Canvas(10,20)
+
+    assert c.width == 10
+    assert c.height == 20
+    for row in c.canvas:
+        for p in row:
+            assert p.color == black
