@@ -1,6 +1,7 @@
 import math
 import pytest
 from features.Tuple import Tuple, Point, Vector, Color
+from features.Canvas import Canvas
 
 # EQUALITY FUNCTION FOR FLOATING POINT COMPARISON
 EPSILON = 0.00001
@@ -182,14 +183,48 @@ def test_color_color_multiplication():
     c3 = Color(0.9, 0.2, 0.04)
     assert c1 * c2 == c3
 
+def test_color_to_string():
+    c = Color(1,0.5,0.2)
+    assert c.to_string() == "255 128 51"
+
 
 # CANVAS
 def test_canvas_creation():
     black = Color(0,0,0)
     c = Canvas(10,20)
-
     assert c.width == 10
     assert c.height == 20
+    assert len(c.canvas) == c.height
+    assert len(c.canvas[0]) == c.width
     for row in c.canvas:
         for p in row:
-            assert p.color == black
+            assert p["color"] == black
+
+def test_canvas_write():
+    c = Canvas(10,20)
+    red = Color(1,0,0)
+    c.write_pixel(2,3,red)
+    assert c.pixel_at(2,3)["color"] == red
+    assert c.canvas[3][2]["color"] == red
+
+def test_canvas_to_ppm_headers():
+    c = Canvas(5,3)
+    ppm = c.to_ppm()
+    header = ppm.split('\n')[:3]
+    assert header == ["P3","5 3","255"]
+
+def test_canvas_to_ppm_colors():
+    c = Canvas(5,3)
+    c1 = Color(1.5,0,0)
+    c2 = Color(0,0.5,0)
+    c3 = Color(-0.5,0,1)
+    c.write_pixel(0,0, c1)
+    c.write_pixel(2,1,c2)
+    c.write_pixel(4,2,c3)
+    ppm = c.to_ppm()
+    color_data = ppm.split('\n')[3:-1]
+    assert color_data == [
+        "255 0 0 0 0 0 0 0 0 0 0 0 0 0 0",
+        "0 0 0 0 0 0 0 128 0 0 0 0 0 0 0",
+        "0 0 0 0 0 0 0 0 0 0 0 0 0 0 255"
+    ]

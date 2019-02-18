@@ -102,6 +102,12 @@ class Color(Tuple):
     def get_blue(self):
         return self.z
 
+    def to_string(self):
+        rgb = []
+        for c in [self.x,self.y,self.z]:
+            rgb.append(str(max(0,min(round(c*255),255))))
+        return " ".join(rgb)
+
     red = property(get_red)
     green = property(get_green)
     blue = property(get_blue)
