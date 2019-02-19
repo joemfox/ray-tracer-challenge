@@ -1,4 +1,4 @@
-import math
+import math 
 from features.util import equals
 from features.Tuple import Tuple, Point, Vector, Color
 
@@ -9,6 +9,8 @@ class Canvas:
         self.canvas = [[{"color":color} for x in range(width)] for y in range(height)]
 
     def write_pixel(self, x, y, color):
+        x = round(x)
+        y = round(y)
         if (x >= self.width) or (y >= self.height):
             return
         self.canvas[y][x]["color"] = color
@@ -16,7 +18,7 @@ class Canvas:
     def pixel_at(self, x, y):
         return self.canvas[y][x]
 
-    def to_ppm(self):
+    def to_ppm(self,filepath=None):
         # ppm headers: P3 height width 255
         ppm = f"P3\n{self.width} {self.height}\n255\n"
 
@@ -36,4 +38,7 @@ class Canvas:
             color_data += current + "\n"
 
         ppm += color_data
+        if(filepath):
+            with open("./output/test.ppm","w") as f:
+                f.write(ppm)
         return ppm
