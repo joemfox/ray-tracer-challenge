@@ -2,6 +2,7 @@ import math
 import pytest
 from features.Tuple import Tuple, Point, Vector, Color
 from features.Canvas import Canvas
+from features.Matrix import Matrix
 
 # EQUALITY FUNCTION FOR FLOATING POINT COMPARISON
 EPSILON = 0.00001
@@ -243,3 +244,95 @@ def test_canvas_to_ppm_newline_term():
     c = Canvas(5, 3)
     ppm = c.to_ppm()
     assert ppm[-1] == '\n'
+
+# MATRICES
+def test_blank_matrix_init():
+    m = Matrix(4,4)
+    assert len(m) == 4
+    assert len(m[0]) == 4
+
+def test_matrix_init():
+    m = Matrix(4,4,
+            [[1,2,3,4],
+            [5.5,6.5,7.5,8.5],
+            [9,10,11,12],
+            [13.5,14.5,15.5,16.5]]
+        )
+    assert m[0][0] == 1
+    assert m[0][3] == 4
+    assert m[1][0] == 5.5
+    assert m[1][2] == 7.5
+    assert m[2][2] == 11
+    assert m[3][0] == 13.5
+    assert m[3][2] == 15.5
+
+def test_2x2_matrix():
+    m = Matrix(2,2,
+            [[-3,5],
+            [1,-2]]
+        )
+    assert m[0][0] == -3
+    assert m[0][1] == 5
+    assert m[1][0] == 1
+    assert m[1][1] == -2
+
+def test_3x3_matrix():
+    m = Matrix(3,3,
+        [[-3,5,0],
+        [1,-2,-7],
+        [0,1,1]]
+    )
+    assert m[0][0] == -3
+    assert m[1][1] == -2
+    assert m[2][2] == 1
+
+def test_matrix_equality():
+    m = Matrix(4,4,
+            [[1,2,3,4],
+            [5,6,7,8],
+            [9,10,11,12],
+            [13,14,15,16]]
+        )
+    n = Matrix(4,4,
+            [[1,2,3,4],
+            [5,6,7,8],
+            [9,10,11,12],
+            [13,14,15,16]]
+        )
+    assert m == n
+
+def test_matrix_inequality():
+    m = Matrix(4,4,
+            [[1,2,3,4],
+            [5,6,7,8],
+            [9,10,11,12],
+            [13,14,15,16]]
+        )
+    n = Matrix(4,4,
+            [[5,6,7,8],
+            [9,10,11,12],
+            [13,14,15,16],
+            [4,3,2,1]]
+        )
+    assert m != n
+
+def test_matrix_multiplication():
+    a = Matrix(4,4,
+            [[1,2,3,4],
+            [5,6,7,8],
+            [9,8,7,6],
+            [5,4,3,2]]
+        )
+    b = Matrix(4,4,
+            [[-2,1,2,3],
+            [3,2,1,-1],
+            [4,3,6,5],
+            [1,2,7,8]]
+        )
+    c = Matrix(4,4,
+            [[20,22,50,48],
+            [44,54,114,108],
+            [40,58,110,102],
+            [16,26,46,42]]
+        )
+    assert a * b == c
