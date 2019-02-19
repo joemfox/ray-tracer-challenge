@@ -1,3 +1,4 @@
+from features.Tuple import Tuple
 class Matrix(list):
     def __init__(self, w, h, m=None):
         if(not m):
@@ -12,10 +13,27 @@ class Matrix(list):
     def size(self):
         return [len(self),len(self[0])]
 
-    def __mul__(self, other):
-        a = self
-        b = other
+    size = property(size)
 
-        v = [[sum(i*j for i,j in zip(a_row,b_col)) for b_col in zip(*b)] for a_row in a]
-        
-        return Matrix(max(a.size()[0],b.size()[0]),max(a.size()[1],b.size()[1]),v)
+    def __mul__(self, other):
+        if isinstance(other,Matrix):
+            a = self
+            b = other
+
+            v = [[sum(i*j for i,j in zip(a_row,b_col)) for b_col in zip(*b)] for a_row in a]
+            
+            return Matrix(max(a.size[0],b.size[0]),max(a.size[1],b.size[1]),v)
+        elif isinstance(other, Tuple):
+            a = self
+            b = other
+            v = [sum(i*j for i,j in zip(a_row,b.coords)) for a_row in a]
+            return Tuple(*v)
+
+    def transpose(self):
+        a = Matrix(*self.size)
+
+        for y in range(self.size[0]):
+            for x in range(self.size[1]):
+                a[x][y] = self[y][x]
+
+        return a

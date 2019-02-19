@@ -10,6 +10,14 @@ EPSILON = 0.00001
 def equals(a,b):
     return abs(a - b) < EPSILON
 
+
+identity_matrix = Matrix(4,4,
+        [[1,0,0,0],
+        [0,1,0,0],
+        [0,0,1,0],
+        [0,0,0,1]]
+    )
+
 # EQUALITY TEST
 def test_equality():
     a = 0.1 + 0.2
@@ -336,3 +344,47 @@ def test_matrix_multiplication():
             [16,26,46,42]]
         )
     assert a * b == c
+
+def test_matrix_multi_tuple():
+    a = Matrix(4,4,
+            [[1,2,3,4],
+            [2,4,4,2],
+            [8,6,4,1],
+            [0,0,0,1]]
+        )
+    b = Tuple(1,2,3,1)
+    c = Tuple(18,24,33,1)
+    assert a * b == c
+
+def test_identity_matrix():
+    a = Matrix(4,4,
+            [[0,1,2,4],
+            [1,2,4,8],
+            [2,4,8,16],
+            [4,8,16,32]]
+        )
+    assert a * identity_matrix == a
+
+def test_identity_matrix_x_tuple():
+    a = Tuple(1,2,3,4)
+    assert identity_matrix * a == a
+
+def test_matrix_transpose():
+    a = Matrix(4,4,
+        [[0,9,3,0],
+        [9,8,0,8],
+        [1,8,5,3],
+        [0,0,5,8]]
+    )
+    b = Matrix(4,4,
+        [[0,9,1,0],
+        [9,8,8,0],
+        [3,0,5,5],
+        [0,8,3,8]]
+    )
+
+    assert a.transpose() == b
+
+def test_identity_matrix_transpose():
+    a = identity_matrix.transpose()
+    assert a == identity_matrix
