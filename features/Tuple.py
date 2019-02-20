@@ -51,9 +51,11 @@ class Tuple:
             z = self.z * other.z
             w = self.w * other.w
             return type(self)(x, y, z, w)
-        else:
+        elif isinstance(other,float) or isinstance(other,int):
             coords = [c * other for c in self.coords]
             return Tuple(*coords)
+        else:
+            return other * self
     
     def __truediv__(self, scalar):
         coords = [c / scalar for c in self.coords]

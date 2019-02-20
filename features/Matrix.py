@@ -1,4 +1,5 @@
 from features.Tuple import Tuple
+from features.util import equals
 class Matrix(list):
     def __init__(self, w, h, m=None):
         if(not m):
@@ -14,6 +15,23 @@ class Matrix(list):
         return [len(self),len(self[0])]
 
     size = property(size)
+
+    def __eq__(self,other):
+        eq_flag = True
+        if not isinstance(other,list):
+            return False
+
+        if len(self) != len(other):
+            return False
+        for row in range(self.size[0]):
+            if not isinstance(other[row],list):
+                return False
+            if len(self[row]) != len(other[row]):
+                return False
+            for col in range(self.size[1]):
+                if not equals(self[row][col], other[row][col]):
+                    eq_flag == False
+        return eq_flag
 
     def __mul__(self, other):
         if isinstance(other,Matrix):
@@ -62,3 +80,19 @@ class Matrix(list):
         if (row+col) % 2 != 0:
             minor *= -1
         return minor
+
+    def is_invertible(self):
+        if self.determinant == 0:
+            return False
+        else: return True
+
+    is_invertible = property(is_invertible)
+
+    def inverse(self):
+        assert self.is_invertible, "Matrix is not invertible"
+        a = Matrix(*self.size)
+        for row in range(len(a)):
+            for col in range(len(a[0])):
+                c = self.cofactor(row,col)
+                a[col][row] = c/self.determinant
+        return a
