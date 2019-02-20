@@ -38,6 +38,6 @@ class Canvas:
 
         ppm += color_data
         if(filepath):
-            with open("./output/test.ppm","w") as f:
+            with open(filepath,"w") as f:
                 f.write(ppm)
         return ppm
