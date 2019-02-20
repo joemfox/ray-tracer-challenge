@@ -558,19 +558,19 @@ def test_multiply_product_by_inverse():
 
 # translations
 def test_translation():
-    transform = Translation(5,-3,2)
+    transform = Translate(5,-3,2)
     p = Point(-3,4,5)
     assert transform * p == Point(2,1,7)
 
 def test_inverse_translation():
-    transform = Translation(5,-3,2)
+    transform = Translate(5,-3,2)
     i = transform.inverse()
     p = Point(-3,4,5)
     assert i * p == Point(-8,7,3)
     assert p * i == Point(-8,7,3)
 
 def test_vector_translation():
-    transform = Translation(5,-3,2)
+    transform = Translate(5,-3,2)
     v = Vector(-3,4,5)
     assert transform * v == v
     assert v * transform == v
@@ -652,3 +652,27 @@ def test_shear_ZY():
     transform = Shear(0,0,0,0,0,1)
     p = Point(2,3,4)
     assert transform * p == Point(2,3,7)
+
+def test_transform_sequences():
+    p = Point(1,0,1)
+    a = RotateX(math.pi/2)
+    b = Scale(5,5,5)
+    c = Translate(10,5,7)
+    
+    p2 = a * p
+    assert p2 == Point(1,-1,0)
+
+    p3 = b * p2
+    assert p3 == Point(5,-5,0)
+
+    p4 = c * p3
+    assert p4 == Point(15,0,7)
+
+def test_transform_chaining():
+    p = Point(1,0,1)
+    a = RotateX(math.pi/2)
+    b = Scale(5,5,5)
+    c = Translate(10,5,7)
+    
+    t = c * b * a
+    assert t * p == Point(15,0,7)

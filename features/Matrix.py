@@ -98,7 +98,7 @@ class Matrix(list):
                 a[col][row] = c/self.determinant
         return a
 
-class Translation(Matrix):
+class Translate(Matrix):
     def __init__(self,x,y,z):
         self += identity_matrix()
         self[0][3] = x
