@@ -1,4 +1,3 @@
-import math 
 from features.util import equals
 from features.Tuple import Tuple, Point, Vector, Color
 

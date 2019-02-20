@@ -1,8 +1,8 @@
 import math
 import pytest
-from features.Tuple import Tuple, Point, Vector, Color
-from features.Canvas import Canvas
-from features.Matrix import Matrix
+from features.Tuple import *
+from features.Canvas import *
+from features.Matrix import *
 
 # EQUALITY FUNCTION FOR FLOATING POINT COMPARISON
 EPSILON = 0.00001
@@ -555,3 +555,100 @@ def test_multiply_product_by_inverse():
     )
     c = a * b
     assert c * b.inverse() == a
+
+# translations
+def test_translation():
+    transform = Translation(5,-3,2)
+    p = Point(-3,4,5)
+    assert transform * p == Point(2,1,7)
+
+def test_inverse_translation():
+    transform = Translation(5,-3,2)
+    i = transform.inverse()
+    p = Point(-3,4,5)
+    assert i * p == Point(-8,7,3)
+    assert p * i == Point(-8,7,3)
+
+def test_vector_translation():
+    transform = Translation(5,-3,2)
+    v = Vector(-3,4,5)
+    assert transform * v == v
+    assert v * transform == v
+
+def test_scale_point():
+    transform = Scale(2,3,4)
+    p = Point(-4,6,8)
+    assert transform * p == Point(-8,18,32)
+
+def test_scale_vector():
+    transform = Scale(2,3,4)
+    v = Vector(-4,6,8)
+    assert transform * v == Vector(-8,18,32)
+
+def test_inverse_scale_vector():
+    transform = Scale(2,3,4)
+    i = transform.inverse()
+    v = Vector(-4,6,8)
+    assert i * v == Vector(-2,2,2)
+
+def test_reflect_scale():
+    transform = Scale(-1,1,1)
+    p = Point(2,3,4)
+    assert transform * p == Point(-2,3,4)
+
+def test_x_rotation():
+    p = Point(0,1,0)
+    eighth_turn = RotateX(math.pi/4)
+    quarter_turn = RotateX(math.pi/2)
+    assert eighth_turn * p == Point(0,math.sqrt(2)/2,math.sqrt(2)/2)
+    assert quarter_turn * p == Point(0,0,1)
+
+def test_invert_x_rotation():
+    p = Point(0,1,0)
+    eighth_turn = RotateX(math.pi/4)
+    i = eighth_turn.inverse()
+    assert i * p == Point(0,math.sqrt(2)/2,-math.sqrt(2)/2)
+
+def test_y_rotation():
+    p = Point(0,0,1)
+    eighth_turn = RotateY(math.pi/4)
+    quarter_turn = RotateY(math.pi/2)
+    assert eighth_turn * p == Point(math.sqrt(2)/2,0,math.sqrt(2)/2)
+    assert quarter_turn * p == Point(1,0,0)
+
+def test_z_rotation():
+    p = Point(0,1,0)
+    eighth_turn = RotateZ(math.pi/4)
+    quarter_turn = RotateZ(math.pi/2)
+    assert eighth_turn * p == Point(-math.sqrt(2)/2,math.sqrt(2)/2,0)
+    assert quarter_turn * p == Point(-1,0,0)
+
+def test_shear_XY():
+    transform = Shear(1,0,0,0,0,0)
+    p = Point(2,3,4)
+    assert transform * p == Point(5,3,4)
+
+def test_shear_XZ():
+    transform = Shear(0,1,0,0,0,0)
+    p = Point(2,3,4)
+    assert transform * p == Point(6,3,4)
+
+def test_shear_YX():
+    transform = Shear(0,0,1,0,0,0)
+    p = Point(2,3,4)
+    assert transform * p == Point(2,5,4)
+
+def test_shear_YZ():
+    transform = Shear(0,0,0,1,0,0)
+    p = Point(2,3,4)
+    assert transform * p == Point(2,7,4)
+
+def test_shear_ZX():
+    transform = Shear(0,0,0,0,1,0)
+    p = Point(2,3,4)
+    assert transform * p == Point(2,3,6)
+
+def test_shear_ZY():
+    transform = Shear(0,0,0,0,0,1)
+    p = Point(2,3,4)
+    assert transform * p == Point(2,3,7)

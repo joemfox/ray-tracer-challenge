@@ -1,3 +1,4 @@
+import math
 from features.Tuple import Tuple
 from features.util import equals
 class Matrix(list):
@@ -96,3 +97,59 @@ class Matrix(list):
                 c = self.cofactor(row,col)
                 a[col][row] = c/self.determinant
         return a
+
+class Translation(Matrix):
+    def __init__(self,x,y,z):
+        self += identity_matrix()
+        self[0][3] = x
+        self[1][3] = y
+        self[2][3] = z
+
+class Scale(Matrix):
+    def __init__(self,x,y,z):
+        self += identity_matrix()
+        self[0][0] = x
+        self[1][1] = y
+        self[2][2] = z
+
+class RotateX(Matrix):
+    def __init__(self,r):
+        self += identity_matrix()
+        self[1][1] = math.cos(r)
+        self[2][2] = math.cos(r)
+        self[1][2] = -math.sin(r)
+        self[2][1] = math.sin(r)
+
+class RotateY(Matrix):
+    def __init__(self,r):
+        self += identity_matrix()
+        self[0][0] = math.cos(r)
+        self[2][2] = math.cos(r)
+        self[2][0] = -math.sin(r)
+        self[0][2] = math.sin(r)
+
+class RotateZ(Matrix):
+    def __init__(self,r):
+        self += identity_matrix()
+        self[0][0] = math.cos(r)
+        self[1][1] = math.cos(r)
+        self[0][1] = -math.sin(r)
+        self[1][0] = math.sin(r)
+
+class Shear(Matrix):
+    def __init__(self,xy,xz,yx,yz,zx,zy):
+        self += identity_matrix()
+        self[0][1] = xy
+        self[0][2] = xz
+        self[1][0] = yx
+        self[1][2] = yz
+        self[2][0] = zx
+        self[2][1] = zy
+
+def identity_matrix():
+    return Matrix(4,4,
+        [[1,0,0,0],
+        [0,1,0,0],
+        [0,0,1,0],
+        [0,0,0,1]]
+    )
