@@ -431,3 +431,41 @@ def test_3x3_minor():
     b = a.submatrix(1,0)
     assert b.determinant == 25
     assert a.minor(1,0) == 25
+
+def test_3x3_cofactor():
+    a = Matrix(3,3,
+        [[3,5,0],
+        [2,-1,-7],
+        [6,-1,5]]
+    )
+    assert a.minor(0,0) == -12
+    assert a.cofactor(0,0) == -12
+    assert a.minor(1,0) == 25
+    assert a.cofactor(1,0) == -25
+
+def test_3x3_determinant():
+    a = Matrix(3,3,
+        [[1,2,6],
+        [-5,8,-4],
+        [2,6,4]]
+    )
+
+    assert a.cofactor(0,0) == 56
+    assert a.cofactor(0,1) == 12
+    assert a.cofactor(0,2) == -46
+    assert a.determinant == -196
+
+def test_4x4_determinant():
+    a = Matrix(4,4,
+        [[-2,-8,3,5],
+        [-3,1,7,3],
+        [1,2,-9,6],
+        [-6,7,7,-9]]
+    )
+
+    assert a.cofactor(0,0) == 690
+    assert a.cofactor(0,1) == 447
+    assert a.cofactor(0,2) == 210
+    assert a.cofactor(0,3) == 51
+    assert a.determinant == -4071
+

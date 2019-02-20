@@ -41,6 +41,8 @@ class Matrix(list):
     def determinant(self):
         if(self.size == [2,2]):
             return (self[0][0] * self[1][1]) - (self[0][1] * self[1][0])
+        else:
+            return sum([self[0][j] * self.cofactor(0,j) for j in range(self.size[1])])
 
     determinant = property(determinant)
 
@@ -54,3 +56,9 @@ class Matrix(list):
     def minor(self,row,col):
         sub = self.submatrix(row,col)
         return sub.determinant
+
+    def cofactor(self,row,col):
+        minor = self.minor(row,col)
+        if (row+col) % 2 != 0:
+            minor *= -1
+        return minor
