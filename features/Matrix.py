@@ -37,3 +37,20 @@ class Matrix(list):
                 a[x][y] = self[y][x]
 
         return a
+
+    def determinant(self):
+        if(self.size == [2,2]):
+            return (self[0][0] * self[1][1]) - (self[0][1] * self[1][0])
+
+    determinant = property(determinant)
+
+    def submatrix(self,row,col):
+        a = [row.copy() for row in self]
+        for r in a:
+            del r[col]
+        del a[row]
+        return Matrix(len(a),len(a[0]),a)
+    
+    def minor(self,row,col):
+        sub = self.submatrix(row,col)
+        return sub.determinant

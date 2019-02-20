@@ -388,3 +388,46 @@ def test_matrix_transpose():
 def test_identity_matrix_transpose():
     a = identity_matrix.transpose()
     assert a == identity_matrix
+
+def test_matrix_determinant_2x2():
+    a = Matrix(2,2,
+        [[1,5],
+        [-3,2]]
+    )
+    assert a.determinant == 17
+
+def test_3x3_submatrix():
+    a = Matrix(3,3,
+        [[1,5,0],
+        [-3,2,7],
+        [0,6,-3]]
+    )
+    b = Matrix(2,2,
+        [[-3,2],
+        [0,6]]
+    )
+    assert a.submatrix(0,2) == b
+
+def test_4x4_submatrix():
+    a = Matrix(4,4,
+        [[-6,1,1,6],
+        [-8,5,8,6],
+        [-1,0,8,2],
+        [-7,1,-1,1]]
+    )
+    b = Matrix(3,3,
+        [[-6,1,6],
+        [-8,8,6],
+        [-7,-1,1]]        
+    )
+    assert a.submatrix(2,1) == b
+
+def test_3x3_minor():
+    a = Matrix(3,3,
+        [[3,5,0],
+        [2,-1,-7],
+        [6,-1,5]]
+    )
+    b = a.submatrix(1,0)
+    assert b.determinant == 25
+    assert a.minor(1,0) == 25
