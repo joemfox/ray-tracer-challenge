@@ -789,3 +789,43 @@ def test_hit_lowest_nonneg():
     xs = Intersections([i1,i2,i3,i4])
     i = xs.hit()
     assert i == i4
+
+def test_ray_translation():
+    r = Ray(Point(1,2,3),Vector(0,1,0))
+    m = Translate(3,4,5)
+    r2 = r.transform(m)
+    assert r2.origin == Point(4,6,8)
+    assert r2.direction == Vector(0,1,0)
+
+def test_ray_scale():
+    r = Ray(Point(1,2,3),Vector(0,1,0))
+    m = Scale(2,3,4)
+    r2 = r.transform(m)
+    assert r2.origin == Point(2,6,12)
+    assert r2.direction == Vector(0,3,0)
+
+def test_sphere_default_transform():
+    s = Sphere()
+    assert s.transform == identity_matrix
+
+def test_sphere_transformation():
+    s = Sphere()
+    t = Translate(2,3,4)
+    s.transform = t
+    assert s.transform == t
+
+def test_intersect_scaled_sphere():
+    r = Ray(Point(0,0,-5),Vector(0,0,1))
+    s = Sphere()
+    s.transform = Scale(2,2,2)
+    xs = r.intersect(s)
+    assert len(xs) == 2
+    assert xs[0].t == 3
+    assert xs[1].t == 7
+
+def test_intersect_translated_sphere():
+    r = Ray(Point(0,0,-5),Vector(0,0,1))
+    s = Sphere()
+    s.transform = Translate(5,0,0)
+    xs = r.intersect(s)
+    assert len(xs) == 0
