@@ -6,3 +6,10 @@ class Intersection():
 class Intersections(list):
     def __init__(self,i):
         self += i
+    
+    def hit(self):
+        hit = None
+        pos = list(filter(lambda x: x.t >= 0,self))
+        if len(pos):
+            hit = min(pos,key=lambda x:x.t)
+        return hit

@@ -755,3 +755,37 @@ def test_intersection_sets_object():
     assert len(xs) == 2
     assert xs[0].object == s
     assert xs[1].object == s
+
+def test_get_hit_from_intersections():
+    s = Sphere()
+    i1 = Intersection(1,s)
+    i2 = Intersection(2,s)
+    xs = Intersections([i2,i1])
+    i = xs.hit()
+    assert i == i1
+
+def test_get_hit_from_ints_w_neg():
+    s = Sphere()
+    i1 = Intersection(-1,s)
+    i2 = Intersection(1,s)
+    xs = Intersections([i2,i1])
+    i = xs.hit()
+    assert i == i2
+
+def test_hit_from_all_neg_t():
+    s = Sphere()
+    i1 = Intersection(-2,s)
+    i2 = Intersection(-1,s)
+    xs = Intersections([i2,i1])
+    i = xs.hit()
+    assert not i
+
+def test_hit_lowest_nonneg():
+    s = Sphere()
+    i1 = Intersection(5,s)
+    i2 = Intersection(7,s)
+    i3 = Intersection(-3,s)
+    i4 = Intersection(2,s)
+    xs = Intersections([i1,i2,i3,i4])
+    i = xs.hit()
+    assert i == i4
