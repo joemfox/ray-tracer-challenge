@@ -3,6 +3,8 @@ import pytest
 from features.Tuple import *
 from features.Canvas import *
 from features.Matrix import *
+from features.Ray import *
+from features.Sphere import *
 
 # EQUALITY FUNCTION FOR FLOATING POINT COMPARISON
 EPSILON = 0.00001
@@ -677,3 +679,56 @@ def test_transform_chaining():
     
     t = c * b * a
     assert t * p == Point(15,0,7)
+
+# RAY TRACING!!
+def test_create_ray():
+    origin = Point(1,2,3)
+    direction = Vector(4,5,6)
+    r = Ray(origin, direction)
+    assert r.origin == origin
+    assert r.direction == direction
+
+def test_distance_along_ray():
+    r = Ray(Point(2,3,4), Vector(1,0,0))
+    assert r.position(0) == Point(2,3,4)
+    assert r.position(1) == Point(3,3,4)
+    assert r.position(-1) == Point(1,3,4)
+    assert r.position(2.5) == Point(4.5,3,4)
+
+def test_ray_sphere_intersection():
+    r = Ray(Point(0,0,-5),Vector(0,0,1))
+    s = Sphere()
+    xs = r.intersect(s)
+    assert len(xs) == 2
+    assert xs[0] == 4.0
+    assert xs[1] == 6.0
+
+def test_ray_sphere_tangent_intersection():
+    r = Ray(Point(0,1,-5),Vector(0,0,1))
+    s = Sphere()
+    xs = r.intersect(s)
+    assert len(xs) == 2
+    assert xs[0] == 5.0
+    assert xs[1] == 5.0
+
+def test_ray_non_intersection():
+    r = Ray(Point(0,2,-5),Vector(0,0,1))
+    s = Sphere()
+    xs = r.intersect(s)
+    assert len(xs) == 0
+
+def test_ray_inside_sphere():
+    r = Ray(Point(0,0,0),Vector(0,0,1))
+    s = Sphere()
+    xs = r.intersect(s)
+    assert len(xs) == 2
+    assert xs[0] == -1.0
+    assert xs[1] == 1.0
+
+def test_ray_negative_intersection():
+    r = Ray(Point(0,0,5),Vector(0,0,1))
+    s = Sphere()
+    xs = r.intersect(s)
+    assert len(xs) == 2
+    assert xs[0] == -6.0
+    assert xs[1] == -4.0

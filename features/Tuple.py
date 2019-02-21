@@ -37,7 +37,12 @@ class Tuple:
         y = self.y - t.y
         z = self.z - t.z
         w = self.w - t.w
-        return Tuple(x, y, z, w)
+        if isinstance(self,Color):
+            return Color(x,y,z)
+        elif w == 0:
+            return Vector(x, y, z)
+        elif w == 1:
+            return Point(x,y,z)
 
     def __neg__(self):
         assert self.is_vector(), "Unary negation operator only works on vectors, not points."

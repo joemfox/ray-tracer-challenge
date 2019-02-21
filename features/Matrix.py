@@ -10,7 +10,7 @@ class Matrix(list):
             assert len(m) == h, f"Matrix instantiated with {h} rows, data has {len(m)}"
             for x in range(len(m)):
                 assert len(m[x]) == w, f"Matrix instantiated with {w} rows, data has {len(m)[0]}"
-            self += m
+            self += [row.copy() for row in m]
 
     def size(self):
         return [len(self),len(self[0])]
