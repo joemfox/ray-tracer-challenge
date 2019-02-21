@@ -1,5 +1,6 @@
 import math
 from features.Tuple import Point, Vector
+from features.Intersection import *
 
 class Ray():
     def __init__(self,origin,direction):
@@ -20,8 +21,8 @@ class Ray():
         if discriminant < 0:
             return list()
         else:        
-            t1 = (-b - math.sqrt(discriminant)) / (2 * a)
-            t2 = (-b + math.sqrt(discriminant)) / (2 * a)
+            t1 = Intersection((-b - math.sqrt(discriminant)) / (2 * a),obj)
+            t2 = Intersection((-b + math.sqrt(discriminant)) / (2 * a),obj)
 
-            return [t1,t2]
+            return Intersections([t1,t2])
     

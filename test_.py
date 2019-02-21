@@ -700,16 +700,16 @@ def test_ray_sphere_intersection():
     s = Sphere()
     xs = r.intersect(s)
     assert len(xs) == 2
-    assert xs[0] == 4.0
-    assert xs[1] == 6.0
+    assert xs[0].t == 4.0
+    assert xs[1].t == 6.0
 
 def test_ray_sphere_tangent_intersection():
     r = Ray(Point(0,1,-5),Vector(0,0,1))
     s = Sphere()
     xs = r.intersect(s)
     assert len(xs) == 2
-    assert xs[0] == 5.0
-    assert xs[1] == 5.0
+    assert xs[0].t == 5.0
+    assert xs[1].t == 5.0
 
 def test_ray_non_intersection():
     r = Ray(Point(0,2,-5),Vector(0,0,1))
@@ -722,13 +722,36 @@ def test_ray_inside_sphere():
     s = Sphere()
     xs = r.intersect(s)
     assert len(xs) == 2
-    assert xs[0] == -1.0
-    assert xs[1] == 1.0
+    assert xs[0].t == -1.0
+    assert xs[1].t == 1.0
 
 def test_ray_negative_intersection():
     r = Ray(Point(0,0,5),Vector(0,0,1))
     s = Sphere()
     xs = r.intersect(s)
     assert len(xs) == 2
-    assert xs[0] == -6.0
-    assert xs[1] == -4.0
+    assert xs[0].t == -6.0
+    assert xs[1].t == -4.0
+
+def test_intersection_class():
+    s = Sphere()
+    i = Intersection(3.5,s)
+    assert i.t == 3.5
+    assert i.object == s
+
+def test_intersections_class():
+    s = Sphere()
+    i1 = Intersection(1,s)
+    i2 = Intersection(2,s)
+    xs = Intersections([i1,i2])
+    assert len(xs) == 2
+    assert xs[0].t == 1
+    assert xs[1].t == 2
+
+def test_intersection_sets_object():
+    r = Ray(Point(0,0,-5),Vector(0,0,1))
+    s = Sphere()
+    xs = r.intersect(s)
+    assert len(xs) == 2
+    assert xs[0].object == s
+    assert xs[1].object == s
