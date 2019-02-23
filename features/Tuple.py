@@ -96,6 +96,9 @@ class Vector(Tuple):
         z = self.x * t.y - self.y * t.x
         return Vector(x, y, z)
 
+    def reflect(self,normal):
+        return self - normal * 2 * self.dot(normal)
+
 class Color(Tuple):
     def __init__(self, r, g, b, w = 0.0):
         Tuple.__init__(self, r, g, b, w)

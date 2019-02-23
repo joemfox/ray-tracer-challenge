@@ -856,3 +856,15 @@ def test_normal_of_transformed_sphere():
     s.transform = m
     n = s.normal(Point(0,math.sqrt(2)/2,-math.sqrt(2)/2))
     assert n == Vector(0,0.97014,-0.24254)
+
+def test_vector_reflection():
+    v = Vector(1,-1,0)
+    n = Vector(0,1,0)
+    r = v.reflect(n)
+    assert r == Vector(1,1,0)
+
+def test_vector_reflection_slant():
+    v = Vector(0,-1,0)
+    n = Vector(math.sqrt(2)/2,math.sqrt(2)/2,0)
+    r = v.reflect(n)
+    assert r == Vector(1,0,0)
