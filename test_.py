@@ -898,3 +898,48 @@ def test_sphere_material_assignment():
     m.ambient = 1
     s.material = m
     assert s.material == m
+
+def test_lighting_setup_1():
+    m = Material()
+    p = Point(0,0,0)
+    eyev = Vector(0,0,-1)
+    n = Vector(0,0,-1)
+    light = Point_Light(Point(0,0,-10),Color(1,1,1))
+    result = m.compute_lighting(light,p,eyev,n)
+    assert result == Color(1.9,1.9,1.9)
+
+def test_lighting_setup_2():
+    m = Material()
+    p = Point(0,0,0)
+    eyev = Vector(0,math.sqrt(2)/2,-math.sqrt(2)/2)
+    n = Vector(0,0,-1)
+    light = Point_Light(Point(0,0,-10),Color(1,1,1))
+    result = m.compute_lighting(light,p,eyev,n)
+    assert result == Color(1.0,1.0,1.0)
+
+def test_lighting_setup_3():
+    m = Material()
+    p = Point(0,0,0)
+    eyev = Vector(0,0,-1)
+    n = Vector(0,0,-1)
+    light = Point_Light(Point(0,10,-10),Color(1,1,1))
+    result = m.compute_lighting(light,p,eyev,n)
+    assert result == Color(0.7364,0.7364,0.7364)
+
+def test_lighting_setup_4():
+    m = Material()
+    p = Point(0,0,0)
+    eyev = Vector(0,math.sqrt(2)/2,-math.sqrt(2)/2)
+    n = Vector(0,0,-1)
+    light = Point_Light(Point(0,10,-10),Color(1,1,1))
+    result = m.compute_lighting(light,p,eyev,n)
+    assert result == Color(1.6364,1.6364,1.6364)
+
+def test_lighting_setup_5():
+    m = Material()
+    p = Point(0,0,0)
+    eyev = Vector(0,0,-1)
+    n = Vector(0,0,-1)
+    light = Point_Light(Point(0,0,10),Color(1,1,1))
+    result = m.compute_lighting(light,p,eyev,n)
+    assert result == Color(0.1,0.1,0.1)

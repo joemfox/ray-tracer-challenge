@@ -1,5 +1,6 @@
 from features.Tuple import Color
 from features.util import equals
+import math
 
 class Material():
     def __init__(self):
@@ -19,3 +20,25 @@ class Material():
                 and equals(self.shininess,t.shininess)
                 )
         else: return False
+    
+    def compute_lighting(self,l,p,e,n):
+        effective_color = self.color * l.intensity
+        lightv = (l.position - p).normalize()
+        ambient = effective_color * self.ambient
+
+        light_dot_normal = lightv.dot(n)
+        if light_dot_normal < 0:
+            diffuse = Color(0,0,0)
+            specular = Color(0,0,0)
+        else:
+            diffuse = effective_color * self.diffuse * light_dot_normal
+            reflectv = -lightv.reflect(e)
+            reflect_dot_eye = reflectv.dot(e)
+
+            if reflect_dot_eye <= 0:
+                specular = Color(0,0,0)
+            else:
+                factor = math.pow(reflect_dot_eye,self.shininess)
+                specular = l.intensity * self.specular * factor
+        
+        return ambient + diffuse + specular
