@@ -1,5 +1,5 @@
 import math
-from features.Tuple import Tuple
+from features.Tuple import Tuple, Vector, Point
 from features.util import equals
 class Matrix(list):
     def __init__(self, w, h, m=None):
@@ -42,11 +42,15 @@ class Matrix(list):
             v = [[sum(i*j for i,j in zip(a_row,b_col)) for b_col in zip(*b)] for a_row in a]
             
             return Matrix(max(a.size[0],b.size[0]),max(a.size[1],b.size[1]),v)
-        elif isinstance(other, Tuple):
+        else:
             a = self
             b = other
             v = [sum(i*j for i,j in zip(a_row,b.coords)) for a_row in a]
-            return Tuple(*v)
+            if isinstance(other, Vector):
+                return Vector(*v)
+            elif isinstance(other,Point):
+                return Point(*v)
+            else: return Tuple(*v)
 
     def transpose(self):
         a = Matrix(*self.size)

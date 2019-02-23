@@ -843,3 +843,16 @@ def test_normal_is_normalized():
     s = Sphere()
     n = s.normal(Point(p,p,p))
     assert n == n.normalize()
+
+def test_normal_of_translated_sphere():
+    s = Sphere()
+    s.transform = Translate(0,1,0)
+    n = s.normal(Point(0,1.70711,-0.70711))
+    assert n == Vector(0,0.70711,-0.70711)
+
+def test_normal_of_transformed_sphere():
+    s = Sphere()
+    m = Scale(1,0.5,1) * RotateZ(math.pi/5)
+    s.transform = m
+    n = s.normal(Point(0,math.sqrt(2)/2,-math.sqrt(2)/2))
+    assert n == Vector(0,0.97014,-0.24254)
