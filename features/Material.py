@@ -40,5 +40,4 @@ class Material():
             else:
                 factor = math.pow(reflect_dot_eye,self.shininess)
                 specular = l.intensity * self.specular * factor
-        
         return ambient + diffuse + specular

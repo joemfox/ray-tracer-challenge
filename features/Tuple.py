@@ -108,6 +108,17 @@ class Color(Tuple):
     def __init__(self, r, g, b, w = 0.0):
         Tuple.__init__(self, r, g, b, w)
 
+    def __mul__(self, other):
+        if isinstance(other, Color):
+            x = self.x * other.x
+            y = self.y * other.y
+            z = self.z * other.z
+            w = self.w * other.w
+            return type(self)(x, y, z, 0)
+        elif isinstance(other,float) or isinstance(other,int):
+            coords = [c * other for c in self.coords]
+            return Color(*coords)
+
     def get_red(self):
         return self.x
 

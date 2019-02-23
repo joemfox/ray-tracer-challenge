@@ -3,9 +3,11 @@ from features.Ray import Ray
 from features.Sphere import Sphere
 from features.Matrix import Translate,Scale, Shear
 from features.Tuple import Color, Point, Vector
+from features.Material import Material
+from features.Light import Point_Light
 
 if __name__ == '__main__':
-    canvas_size = 100
+    canvas_size = 200
     wall_size = 10
     pix_size = wall_size/canvas_size
     half = wall_size/2
@@ -13,7 +15,12 @@ if __name__ == '__main__':
 
     c = Canvas(canvas_size,canvas_size)
     s = Sphere()
-    s.transform = Shear(0.5,0,0,0,0,0) * Scale(0.5,1,1)
+    s.material.color = Color(0.2,0.8,1)
+    s.material.shininess = 100
+    # s.transform = Shear(0.5,0,0,0,0,0) * Scale(0.5,1,1)
+
+    light = Point_Light(Point(-10,10,-10),Color(1,1,1))
+
     origin = Point(0,0,-5)
     for y in range(canvas_size):
         world_y = half - pix_size * y
@@ -25,5 +32,10 @@ if __name__ == '__main__':
             r = Ray(origin,direction)
             i = r.intersect(s)
             if i.hit():
-                c.write_pixel(x,y,Color(1,0,0))
-    c.to_ppm('output/sphere_render.ppm')
+                hit = i.hit()
+                p = r.position(hit.t)
+                n = hit.object.normal(p)
+                camera = -r.direction
+                color = hit.object.material.compute_lighting(light,p,camera,n)
+                c.write_pixel(x,y,color)
+    c.to_ppm('output/sphere_render_3d.ppm')
