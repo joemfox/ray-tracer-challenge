@@ -5,6 +5,8 @@ from features.Canvas import *
 from features.Matrix import *
 from features.Ray import *
 from features.Sphere import *
+from features.Light import *
+from features.Material import *
 
 # EQUALITY TEST
 def test_equality():
@@ -868,3 +870,31 @@ def test_vector_reflection_slant():
     n = Vector(math.sqrt(2)/2,math.sqrt(2)/2,0)
     r = v.reflect(n)
     assert r == Vector(1,0,0)
+
+# lights and materials
+def test_light_creation():
+    i = Color(1,1,1)
+    p = Point(0,0,0)
+    light = Point_Light(p,i)
+    assert light.position == p
+    assert light.intensity == i
+
+def test_default_material():
+    m = Material()
+    assert m.color == Color(1,1,1)
+    assert m.ambient == 0.1
+    assert m.diffuse == 0.9
+    assert m.specular == 0.9
+    assert m.shininess == 200.0
+
+def test_sphere_material():
+    s = Sphere()
+    m = s.material
+    assert m == Material()
+
+def test_sphere_material_assignment():
+    s = Sphere()
+    m = Material()
+    m.ambient = 1
+    s.material = m
+    assert s.material == m
