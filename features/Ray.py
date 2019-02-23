@@ -14,14 +14,14 @@ class Ray():
     
     def intersect(self, obj):
         r = self.transform(obj.transform.inverse())
-        
+
         sphere_to_ray = r.origin - Point(0,0,0)
         a = r.direction.dot(r.direction)
         b = 2 * r.direction.dot(sphere_to_ray)
         c = sphere_to_ray.dot(sphere_to_ray) - 1
         discriminant = math.pow(b,2) - (4 * a * c)
         if discriminant < 0:
-            return list()
+            return Intersections(list())
         else:        
             t1 = Intersection((-b - math.sqrt(discriminant)) / (2 * a),obj)
             t2 = Intersection((-b + math.sqrt(discriminant)) / (2 * a),obj)

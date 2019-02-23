@@ -26,7 +26,7 @@ class Canvas:
             row = " ".join([i["color"].to_string() for i in row])
             # if(len(" ".join(row)) > 70):
             values = iter(row.split())
-            lines, current = [], next(values)
+            current = next(values)
             for v in values:
                 if len(current) + 1 + len(v) > 70:
                     color_data += current + "\n"

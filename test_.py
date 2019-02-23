@@ -6,20 +6,6 @@ from features.Matrix import *
 from features.Ray import *
 from features.Sphere import *
 
-# EQUALITY FUNCTION FOR FLOATING POINT COMPARISON
-EPSILON = 0.00001
-
-def equals(a,b):
-    return abs(a - b) < EPSILON
-
-
-identity_matrix = Matrix(4,4,
-        [[1,0,0,0],
-        [0,1,0,0],
-        [0,0,1,0],
-        [0,0,0,1]]
-    )
-
 # EQUALITY TEST
 def test_equality():
     a = 0.1 + 0.2
@@ -365,11 +351,11 @@ def test_identity_matrix():
             [2,4,8,16],
             [4,8,16,32]]
         )
-    assert a * identity_matrix == a
+    assert a * identity_matrix() == a
 
 def test_identity_matrix_x_tuple():
     a = Tuple(1,2,3,4)
-    assert identity_matrix * a == a
+    assert identity_matrix() * a == a
 
 def test_matrix_transpose():
     a = Matrix(4,4,
@@ -388,8 +374,8 @@ def test_matrix_transpose():
     assert a.transpose() == b
 
 def test_identity_matrix_transpose():
-    a = identity_matrix.transpose()
-    assert a == identity_matrix
+    a = identity_matrix().transpose()
+    assert a == identity_matrix()
 
 def test_matrix_determinant_2x2():
     a = Matrix(2,2,
@@ -806,7 +792,7 @@ def test_ray_scale():
 
 def test_sphere_default_transform():
     s = Sphere()
-    assert s.transform == identity_matrix
+    assert s.transform == identity_matrix()
 
 def test_sphere_transformation():
     s = Sphere()
@@ -829,3 +815,31 @@ def test_intersect_translated_sphere():
     s.transform = Translate(5,0,0)
     xs = r.intersect(s)
     assert len(xs) == 0
+
+# compute normals
+def test_x_axis_sphere_normal():
+    s = Sphere()
+    n = s.normal(Point(1,0,0))
+    assert n == Vector(1,0,0)
+
+def test_y_axis_sphere_normal():
+    s = Sphere()
+    n = s.normal(Point(0,1,0))
+    assert n == Vector(0,1,0)
+
+def test_z_axis_sphere_normal():
+    s = Sphere()
+    n = s.normal(Point(0,0,1))
+    assert n == Vector(0,0,1)
+
+def test_non_axial_sphere_normal():
+    p = math.sqrt(3)/3
+    s = Sphere()
+    n = s.normal(Point(p,p,p))
+    assert n == Vector(p,p,p)
+
+def test_normal_is_normalized():
+    p = math.sqrt(3)/3
+    s = Sphere()
+    n = s.normal(Point(p,p,p))
+    assert n == n.normalize()
